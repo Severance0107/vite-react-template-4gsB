@@ -1,23 +1,31 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AuthProvider } from './context/AuthProvider'
+import AuthLayout from './layouts/AuthLayout'
+import Auth from './pages/Auth'
+import RutaProtegida from './layouts/RutaProtegida'
+import Avicola from './pages/Avicola'
+import Register from './pages/Register'
+import Pagos from './pages/Pagos'
 
 function App() {
+
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <p>Choo Choo! This is an example of a Vite + React app running on Railway.</p>
-      </div>
-    </>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<AuthLayout />}>
+            <Route index element={<Auth />}/>
+            <Route path='registrar' element={<Register/>}/>
+            <Route path='pagos' element={<Pagos />}/>
+          </Route>
+
+          <Route path='/panel' element={<RutaProtegida />}>
+            <Route index element={<Avicola />}/>
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 
